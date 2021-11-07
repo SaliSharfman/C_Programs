@@ -7,7 +7,15 @@ OBJECTS_REC= basicClassification.o advancedClassificationRecursion.o
 
 
 FLAGS= -Wall -g 
-
+basicClassification.o: basicClassification.c $(HEADER)
+	$(CC) $(FLAGS) -c basicClassification.c
+advancedClassificationLoop.o: advancedClassificationLoop.c $(HEADER)
+	$(CC) $(FLAGS) -c advancedClassificationLoop.c
+advancedClassificationRecursion.o: advancedClassificationRecursion.c $(HEADER)
+	$(CC) $(FLAGS) -c advancedClassificationRecursion.c
+main.o: main.c $(HEADER)
+	$(CC) $(FLAGS) -c main.c
+	
 all: libclassloops.a libclassloops.so libclassrec.a libclassrec.so mains maindloop maindrec
 loops: libclassloops.a 
 loopd: libclassloops.so
