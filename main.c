@@ -16,7 +16,7 @@ int main(){
         }
     }
     printf("\n");
-    printf("The Palindromes numbers are:");
+    printf("The Palindromes are:");
     for(int i=a;i<=b;i++)
     {
         if(isPalindrome(i)==1)
@@ -26,7 +26,7 @@ int main(){
         }
     }
     printf("\n");
-    printf("The Prime numbers numbers are:");
+    printf("The Prime numbers are:");
     for(int i=a;i<=b;i++)
     {
         if(isPrime(i)==1)
