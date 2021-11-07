@@ -1,39 +1,49 @@
 CC = gcc
 AR = ar
-OBJECTS_MAIN = main.o 
+STATIC_LOOP = basicClassification.o advancedClassificationLoop.o
+STATIC_RECURSION = basicClassification.o advancedClassificationRecursion.o
+DYNAMIC_LOOP = basicClassification.o advancedClassificationLoop.o
+DYNAMIC_RECURSION = basicClassification.o advancedClassificationRecursion.o
+FLAGS = -g -Wall
+LM = -lm
+HEADER = NumClass.h
+MAIN = main.o
 
-OBJECTS_LOOPS= basicClassification.o advancedClassificationLoop.o
-OBJECTS_REC= basicClassification.o advancedClassificationRecursion.o
+all: libclassloops.a libclassrec.a libclassloops.so libclassrec.so mains maindloop maindrec
 
-
-FLAGS= -Wall -g 
-
-all: libclassloops.a libclassloops.so libclassrec.a libclassrec.so mains maindloop maindrec
-loops: libclassloops.a 
-loopd: libclassloops.so
+#creat libraries
+loops: libclassloops.a
+libclassloops.a: $(STATIC_LOOP)
+	$(AR) -rcs libclassloops.a $(STATIC_LOOP)
 recursives: libclassrec.a
+libclassrec.a: $(STATIC_RECURSION)
+	$(AR) -rcs libclassrec.a $(STATIC_RECURSION)
+loopd: libclassloops.so
+libclassloops.so: $(DYNAMIC_LOOP)
+	$(CC) -shared -o libclassloops.so $(DYNAMIC_LOOP)
 recursived: libclassrec.so
-mains: libclassrec.a mains
-maindloop: libclassloops.so maindloop
-maindrec: libclassrec.so maindrec
+libclassrec.so: $(DYNAMIC_RECURSION)
+	$(CC) -shared -o libclassrec.so $(DYNAMIC_RECURSION)
 
-libclassloops.a: $(OBJECTS_LOOPS)
-	$(AR) -rcs libclassloops.a $(OBJECTS_LOOPS)
-libclassloops.so: $(OBJECTS_LOOPS)
-	$(CC) -shared -o libclassloops.so $(OBJECTS_LOOPS) -lm
-libclassrec.a: $(OBJECTS_REC)
-	$(AR) -rcs libclassrec.a $(OBJECTS_REC)
-libclassrec.so: $(OBJECTS_REC)
-	$(CC) -shared -o libclassrec.so $(OBJECTS_REC) -lm
+basicClassification.o: basicClassification.c $(HEADER)
+	$(CC) $(FLAGS) -c basicClassification.c
+advancedClassificationLoop.o: advancedClassificationLoop.c $(HEADER)
+	$(CC) $(FLAGS) -c advancedClassificationLoop.c
+advancedClassificationRecursion.o: advancedClassificationRecursion.c $(HEADER)
+	$(CC) $(FLAGS) -c advancedClassificationRecursion.c
 
-mains: $(OBJECTS_MAIN) libclassrec.a
-	$(CC) $(FLAGS) -o mains $(OBJECTS_MAIN) libclassrec.a -lm
-maindloop: $(OBJECTS_MAIN) libclassloops.so
-	$(CC) $(FLAGS) -o maindloop $(OBJECTS_MAIN) ./libclassloops.so -lm
-maindrec: $(OBJECTS_MAIN) libclassrec.so
-	$(CC) $(FLAGS) -o maindrec $(OBJECTS_MAIN) ./libclassrec.so -lm
+#creat main
+mains: $(MAIN) libclassrec.a
+	$(CC) $(FLAGS) -o mains $(MAIN) libclassrec.a $(LM)
+maindloop: $(MAIN) libclassloops.so
+	$(CC) $(FLAGS) -o maindloop $(MAIN) ./libclassloops.so $(LM)
+maindrec: $(MAIN) libclassrec.so
+	$(CC) $(FLAGS) -o maindrec $(MAIN) ./libclassrec.so $(LM)
 
-.PHONY: clean all loops loopd recursuves recursuved mains maindloop maindrec 
+main.o: main.c $(HEADER)
+	$(CC) $(FLAGS) -c main.c
 
-clean: 
-	rm -f *.o *.a *.so mains maindloop maindrec 
+.PHONY: clean all
+
+clean:
+	rm -f *.o *.a *.so mains maindloop maindrec
