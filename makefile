@@ -4,7 +4,7 @@ OBJECTS_MAIN = main.o
 
 OBJECTS_LOOPS= basicClassification.o advancedClassificationLoop.o
 OBJECTS_REC= basicClassification.o advancedClassificationRecursion.o
-
+HEADER = NumClass.h
 
 FLAGS= -Wall -g 
 basicClassification.o: basicClassification.c $(HEADER)

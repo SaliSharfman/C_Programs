@@ -6,7 +6,7 @@ int Armstrong(int x, int len){
     if (x == 0){return 0;}
     if(x > 0 ) {
         return (pow(x%10,len) + Armstrong(x/10, len));
-    }
+    } return 0;
 }
 
 int isArmstrong(int x){
