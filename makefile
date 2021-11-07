@@ -6,7 +6,7 @@ OBJECTS_LOOPS= basicClassification.o advancedClassificationLoop.o
 OBJECTS_REC= basicClassification.o advancedClassificationRecursion.o
 HEADER = NumClass.h
 
-FLAGS= -wall -g 
+FLAGS= -Wall -g 
 basicClassification.o: basicClassification.c $(HEADER)
 	$(CC) $(FLAGS) -c basicClassification.c
 advancedClassificationLoop.o: advancedClassificationLoop.c $(HEADER)
