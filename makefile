@@ -38,7 +38,7 @@ maindloop: $(OBJECTS_MAIN) libclassloops.so
 maindrec: $(OBJECTS_MAIN) libclassrec.so
 	$(CC) $(FLAGS) -o maindrec $(OBJECTS_MAIN) ./libclassrec.so -lm
 
-.PHONY: clean all #loops loopd recursuves recursuved mains maindloop maindrec 
+.PHONY: clean all 
 
 clean: 
 	rm -f *.o *.a *.so mains maindloop maindrec
